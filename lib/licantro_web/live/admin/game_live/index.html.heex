@@ -1,0 +1,52 @@
+<.header>
+  <%= gettext("Games") %>
+  <:actions>
+    <.link navigate={~p"/admin"}>
+      <.button><%= gettext("Back") %></.button>
+    </.link>
+    <.link patch={~p"/admin/games/new"}>
+      <.button><%= gettext("New Game") %></.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="games"
+  rows={@streams.games}
+  row_click={fn {_id, game} -> JS.navigate(~p"/admin/games/#{game}") end}
+>
+  <:col :let={{_id, game}} label="Name"><%= game.name %></:col>
+  <:action :let={{_id, game}}>
+    <.link navigate={~p"/admin/games/#{game}/polls"}><%= gettext("Polls") %></.link>
+  </:action>
+  <:action :let={{_id, game}}>
+    <div class="sr-only">
+      <.link navigate={~p"/admin/games/#{game}"}><%= gettext("Show") %></.link>
+    </div>
+    <.link patch={~p"/admin/games/#{game}/edit"}><%= gettext("Edit") %></.link>
+  </:action>
+  <:action :let={{id, game}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: game.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      <%= gettext("Delete") %>
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="game-modal"
+  show
+  on_cancel={JS.navigate(~p"/admin/games")}
+>
+  <.live_component
+    module={LicantroWeb.Admin.GameLive.FormComponent}
+    id={@game.id || :new}
+    title={@page_title}
+    action={@live_action}
+    game={@game}
+    patch={~p"/admin/games"}
+  />
+</.modal>

@@ -1,0 +1,14 @@
+<.header>
+  <%= gettext("Admin menu") %>
+  <:actions>
+    <.link navigate={~p"/"}>
+      <.button><%= gettext("Back") %></.button>
+    </.link>
+    <.link navigate={~p"/admin/users"}>
+      <.button><%= gettext("Users") %></.button>
+    </.link>
+    <.link navigate={~p"/admin/games"}>
+      <.button><%= gettext("Games") %></.button>
+    </.link>
+  </:actions>
+</.header>

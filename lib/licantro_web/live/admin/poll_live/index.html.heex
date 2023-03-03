@@ -1,0 +1,57 @@
+<.header>
+  <%= @game.name %> : <%= gettext("Polls") %>
+  <:actions>
+    <.link navigate={~p"/admin/games"}>
+      <.button><%= gettext("Back") %></.button>
+    </.link>
+    <.link patch={~p"/admin/games/#{@game.id}/polls/new"}>
+      <.button><%= gettext("New Poll") %></.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="polls"
+  rows={@streams.polls}
+  row_click={fn {_id, poll} -> JS.navigate(~p"/admin/games/#{@game.id}/polls/#{poll}") end}
+>
+  <:col :let={{_id, poll}} label="Name"><%= poll.name %></:col>
+  <:col :let={{_id, poll}} label="Opened at"><%= poll.opened_at %></:col>
+  <:col :let={{_id, poll}} label="Closed at"><%= poll.closed_at %></:col>
+  <:action :let={{_id, poll}}>
+    <.link navigate={~p"/admin/games/#{@game.id}/polls/#{poll}/players"}>
+      <%= gettext("Players") %>
+    </.link>
+  </:action>
+  <:action :let={{_id, poll}}>
+    <div class="sr-only">
+      <.link navigate={~p"/admin/games/#{@game.id}/polls/#{poll}"}><%= gettext("Show") %></.link>
+    </div>
+    <.link patch={~p"/admin/games/#{@game.id}/polls/#{poll}/edit"}><%= gettext("Edit") %></.link>
+  </:action>
+  <:action :let={{id, poll}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: poll.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      <%= gettext("Delete") %>
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="poll-modal"
+  show
+  on_cancel={JS.navigate(~p"/admin/games/#{@game.id}/polls")}
+>
+  <.live_component
+    module={LicantroWeb.Admin.PollLive.FormComponent}
+    id={@poll.id || :new}
+    title={@page_title}
+    action={@live_action}
+    game={@game}
+    poll={@poll}
+    patch={~p"/admin/games/#{@game.id}/polls"}
+  />
+</.modal>

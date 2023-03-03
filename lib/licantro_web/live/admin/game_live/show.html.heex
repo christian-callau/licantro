@@ -1,0 +1,30 @@
+<.header>
+  <%= gettext("Game") %> <%= @game.id %>
+  <:actions>
+    <.link patch={~p"/admin/games/#{@game}/show/edit"} phx-click={JS.push_focus()}>
+      <.button><%= gettext("Edit game") %></.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @game.name %></:item>
+</.list>
+
+<.back navigate={~p"/admin/games"}><%= gettext("Back to games") %></.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="game-modal"
+  show
+  on_cancel={JS.patch(~p"/admin/games/#{@game}")}
+>
+  <.live_component
+    module={LicantroWeb.Admin.GameLive.FormComponent}
+    id={@game.id}
+    title={@page_title}
+    action={@live_action}
+    game={@game}
+    patch={~p"/admin/games/#{@game}"}
+  />
+</.modal>

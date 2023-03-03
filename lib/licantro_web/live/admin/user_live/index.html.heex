@@ -1,0 +1,42 @@
+<.header>
+  <%= gettext("Users") %>
+  <:actions>
+    <.link navigate={~p"/admin"}>
+      <.button><%= gettext("Back") %></.button>
+    </.link>
+    <.link patch={~p"/admin/users/new"}>
+      <.button><%= gettext("New User") %></.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="users"
+  rows={@streams.users}
+  row_click={fn {_id, user} -> JS.navigate(~p"/admin/users/#{user}") end}
+>
+  <:col :let={{_id, user}} label="Name"><%= user.name %></:col>
+  <:col :let={{_id, user}} label="Role"><%= user.role %></:col>
+  <:action :let={{_id, user}}>
+    <div class="sr-only">
+      <.link navigate={~p"/admin/users/#{user}"}><%= gettext("Show") %></.link>
+    </div>
+    <.link patch={~p"/admin/users/#{user}/edit"}><%= gettext("Edit") %></.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="user-modal"
+  show
+  on_cancel={JS.navigate(~p"/admin/users")}
+>
+  <.live_component
+    module={LicantroWeb.Admin.UserLive.FormComponent}
+    id={@user.id || :new}
+    title={@page_title}
+    action={@live_action}
+    user={@user}
+    patch={~p"/admin/users"}
+  />
+</.modal>

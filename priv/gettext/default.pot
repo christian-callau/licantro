@@ -1,0 +1,181 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new messages manually only if they're dynamic
+## messages that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here has no
+## effect: edit them in PO (.po) files instead.
+#
+msgid ""
+msgstr ""
+
+#: lib/licantro_web/components/core_components.ex:490
+#, elixir-autogen, elixir-format
+msgid "Actions"
+msgstr ""
+
+#: lib/licantro_web/live/admin/player_live/index.html.heex:2
+#: lib/licantro_web/live/admin/poll_live/index.html.heex:23
+#, elixir-autogen, elixir-format
+msgid "Players"
+msgstr ""
+
+#: lib/licantro_web/components/core_components.ex:80
+#: lib/licantro_web/components/core_components.ex:169
+#, elixir-autogen, elixir-format
+msgid "close"
+msgstr ""
+
+#: lib/licantro_web/live/admin/player_live/index.html.heex:33
+#, elixir-autogen, elixir-format
+msgid "Add"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/index.html.heex:5
+#: lib/licantro_web/live/admin/home_live/index.html.heex:5
+#: lib/licantro_web/live/admin/player_live/index.html.heex:5
+#: lib/licantro_web/live/admin/poll_live/index.html.heex:5
+#: lib/licantro_web/live/admin/user_live/index.html.heex:5
+#: lib/licantro_web/live/game_live/index.html.heex:4
+#: lib/licantro_web/live/poll_live/index.html.heex:4
+#: lib/licantro_web/live/poll_live/live.html.heex:6
+#, elixir-autogen, elixir-format
+msgid "Back"
+msgstr ""
+
+#: lib/licantro_web/live/admin/player_live/index.html.heex:19
+#, elixir-autogen, elixir-format
+msgid "Remove"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/index.html.heex:33
+#: lib/licantro_web/live/admin/poll_live/index.html.heex:37
+#, elixir-autogen, elixir-format
+msgid "Delete"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/index.html.heex:26
+#: lib/licantro_web/live/admin/poll_live/index.html.heex:30
+#: lib/licantro_web/live/admin/user_live/index.html.heex:24
+#, elixir-autogen, elixir-format
+msgid "Edit"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/index.html.heex:24
+#: lib/licantro_web/live/admin/poll_live/index.html.heex:28
+#: lib/licantro_web/live/admin/user_live/index.html.heex:22
+#, elixir-autogen, elixir-format
+msgid "Show"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/show.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Back to games"
+msgstr ""
+
+#: lib/licantro_web/live/admin/poll_live/show.html.heex:20
+#, elixir-autogen, elixir-format
+msgid "Back to polls"
+msgstr ""
+
+#: lib/licantro_web/live/admin/user_live/show.html.heex:16
+#, elixir-autogen, elixir-format
+msgid "Back to users"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/show.html.heex:5
+#, elixir-autogen, elixir-format
+msgid "Edit game"
+msgstr ""
+
+#: lib/licantro_web/live/admin/poll_live/show.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "Edit poll"
+msgstr ""
+
+#: lib/licantro_web/live/admin/user_live/show.html.heex:5
+#, elixir-autogen, elixir-format
+msgid "Edit user"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/show.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "Game"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/index.html.heex:2
+#: lib/licantro_web/live/admin/home_live/index.html.heex:11
+#: lib/licantro_web/live/game_live/index.html.heex:5
+#: lib/licantro_web/live/home_live/index.html.heex:3
+#, elixir-autogen, elixir-format
+msgid "Games"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/index.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "New Game"
+msgstr ""
+
+#: lib/licantro_web/live/admin/poll_live/index.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "New Poll"
+msgstr ""
+
+#: lib/licantro_web/live/admin/user_live/index.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "New User"
+msgstr ""
+
+#: lib/licantro_web/live/admin/poll_live/show.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "Poll"
+msgstr ""
+
+#: lib/licantro_web/live/admin/game_live/index.html.heex:20
+#: lib/licantro_web/live/admin/poll_live/index.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "Polls"
+msgstr ""
+
+#: lib/licantro_web/live/admin/user_live/show.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "User"
+msgstr ""
+
+#: lib/licantro_web/live/admin/home_live/index.html.heex:8
+#: lib/licantro_web/live/admin/user_live/index.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "Users"
+msgstr ""
+
+#: lib/licantro_web/live/admin/home_live/index.html.heex:2
+#, elixir-autogen, elixir-format
+msgid "Admin menu"
+msgstr ""
+
+#: lib/licantro_web/live/admin/user_live/form_component.ex:25
+#, elixir-autogen, elixir-format
+msgid "Save User"
+msgstr ""
+
+#: lib/licantro_web/live/home_live/index.html.heex:6
+#, elixir-autogen, elixir-format
+msgid "Admin"
+msgstr ""
+
+#: lib/licantro_web/live/home_live/index.html.heex:9
+#, elixir-autogen, elixir-format
+msgid "Log out"
+msgstr ""
+
+#: lib/licantro_web/live/game_live/index.html.heex:17
+#, elixir-autogen, elixir-format
+msgid "No games found"
+msgstr ""
+
+#: lib/licantro_web/live/poll_live/index.html.heex:16
+#, elixir-autogen, elixir-format
+msgid "No polls found"
+msgstr ""

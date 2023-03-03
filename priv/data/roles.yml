@@ -1,0 +1,311 @@
+bodyguard:
+  team: village
+  value: 3
+  en_name: Bodyguard
+  en_desc: Each night, choose a player who cannot be eliminated that night.
+  es_name: Guardaespaldas
+  es_desc:
+
+hunter:
+  team: village
+  value: 3
+  en_name: Hunter
+  en_desc: If you are eliminated, you may immediately eliminate another player.
+  es_name: Cazador
+  es_desc:
+
+mason:
+  team: village
+  value: 2
+  en_name: Mason
+  en_desc: The first night, wake up to see who the other Mason is.
+  es_name: Hermano
+  es_desc:
+
+seer:
+  team: village
+  value: 7
+  en_name: Seer
+  en_desc: Each night choose a player to learn if he is a Villager or a Werewolf.
+  es_name: Vidente
+  es_desc:
+
+sorceress:
+  team: werewolves
+  value: -3
+  en_name: Sorceress
+  en_desc: Each night, look for the Seer. You are on the werewolf team.
+  es_name: Hechicera
+  es_desc:
+
+spellcaster:
+  team: village
+  value: 1
+  en_name: Spellcaster
+  en_desc: Each night, choose a player who may not speak the following day.
+  es_name: Maga
+  es_desc:
+
+village_idiot:
+  team: village
+  value: 2
+  en_name: Village Idiot
+  en_desc: You always vote for players to be eliminated.
+  es_name: Tonto del pueblo
+  es_desc:
+
+villager:
+  team: village
+  value: 1
+  en_name: Villager
+  en_desc: Find the Werewolves and eliminate them.
+  es_name: Aldeano
+  es_desc:
+
+witch:
+  team: village
+  value: 4
+  en_name: Witch
+  en_desc: You may save or eliminate a player at night once each per game.
+  es_name: Bruja
+  es_desc:
+
+wolf_cub:
+  team: werewolves
+  value: -8
+  en_name: Wolf Cub
+  en_desc: Each night, wake with the Werewolves. If you are eliminated, the Werewolves eliminate two players the following night.
+  es_name: Lobito
+  es_desc:
+
+werewolf:
+  team: werewolves
+  value: -6
+  en_name: Werewolf
+  en_desc: Each night, wake with the other Werewolves and choose a player to eliminate.
+  es_name: Lobo
+  es_desc:
+
+apprentice_seer:
+  team: village
+  value: 4
+  en_name: Apprentice Seer
+  en_desc: If the Seer is eliminated, you become the Seer, waking each night to look for Werewolves.
+  es_name: Aprendiz de Vidente
+  es_desc:
+
+aura_seer:
+  team: village
+  value: 3
+  en_name: Aura Seer
+  en_desc: Choose a player each night to see if that player is not a Werewolf or Villager.
+  es_name: Vidente de Aura
+  es_desc:
+
+cult_leader:
+  team: cult
+  value: 1
+  en_name: Cult Leader
+  en_desc: Each night, choose a player to join your cult. If all players are in your cult, you win.
+  es_name: Sectario
+  es_desc:
+
+cupid:
+  team: village
+  value: -3
+  en_name: Cupid
+  en_desc: The first night, choose two players to be linked together. If one of them is eliminated, the other one is eliminated as well.
+  es_name: Cupido
+  es_desc:
+
+cursed:
+  team: village
+  value: -3
+  en_name: Cursed
+  en_desc: You are on the Village team unless you are targeted for elimination by the Werewolves, at witch time you became a Werewolf.
+  es_name: Maldito
+  es_desc:
+
+diseased:
+  team: village
+  value: 3
+  en_name: Diseased
+  en_desc: If you are eliminated by Werewolves, they don't get to eliminate anyone the following night.
+  es_name: Infectada
+  es_desc:
+
+doppelganger:
+  team: village
+  value: -2
+  en_name: Doppelganger
+  en_desc: The first night, choose a player. When that player is eliminated you became that role.
+  es_name: Doppelganger
+  es_desc:
+
+drunk:
+  team: village
+  value: 4
+  en_name: Drunk
+  en_desc: You are a Villager until the 3rd night, when you sober up and learn your real role.
+  es_name: Borracho
+  es_desc:
+
+ghost:
+  team: village
+  value: 2
+  en_name: Ghost
+  en_desc: The first night, you are eliminated. Communicate to the players with single letters each day.
+  es_name: Fantasma
+  es_desc:
+
+hoodlum:
+  team: hoodlum
+  value: 0
+  en_name: Hoodlum
+  en_desc: Choose 2 players on the first night. To win, they must be eliminated and you must still be in the game at the end of the game.
+  es_name: Rufián
+  es_desc:
+
+lone_wolf:
+  team: lone_wolf
+  value: -5
+  en_name: Lone Wolf
+  en_desc: Each night, wake with the other Werewolves. You only win if you are the last player in the game.
+  es_name: Lobo Blanco
+  es_desc:
+
+lycan:
+  team: village
+  value: -1
+  en_name: Lycan
+  en_desc: You are a Villager, but appear to the seer as a Werewolf.
+  es_name: Peludo
+  es_desc:
+
+mayor:
+  team: village
+  value: 2
+  en_name: Mayor
+  en_desc: Your vote counts twice.
+  es_name: Alcalde
+  es_desc:
+
+minion:
+  team: werewolves
+  value: -6
+  en_name: Minion
+  en_desc: You know who the Werewolves are, but you do not wake up with them at night.
+  es_name: Esbirro
+  es_desc:
+
+old_hag:
+  team: village
+  value: 1
+  en_name: Old Hag
+  en_desc: Each night, choose a player to leave the village during the next day.
+  es_name: Vieja Bruja
+  es_desc:
+
+pacifist:
+  team: village
+  value: -1
+  en_name: Pacifist
+  en_desc: You must always vote for players to not be eliminated.
+  es_name: Pacifista
+  es_desc:
+
+investigator:
+  team: village
+  value: 3
+  en_name: Private Investigator
+  en_desc: One night per game, choose a player. You'll be told if that player or one of his neighbors is a Werewolf.
+  es_name: Detective Privado
+  es_desc:
+
+priest:
+  team: village
+  value: 3
+  en_name: Priest
+  en_desc: One night per game, choose a player to be protected. That player may not be eliminated at night.
+  es_name: Cura
+  es_desc:
+
+prince:
+  team: village
+  value: 3
+  en_name: Prince
+  en_desc: If you are voted to be eliminated, your role is revealed and you stay.
+  es_name: Principe
+  es_desc:
+
+tanner:
+  team: tanner
+  value: -2
+  en_name: Tanner
+  en_desc: You hate your job and your life. You win if you are eliminated.
+  es_name: Curtidor
+  es_desc:
+
+tought_guy:
+  team: village
+  value: 3
+  en_name: Tought Guy
+  en_desc: If the Werewolves attempt to eliminate you, you are not eliminated until the following night.
+  es_name: Tipo Duro
+  es_desc:
+
+troublemaker:
+  team: village
+  value: -3
+  en_name: Troublemaker
+  en_desc: One night per game, stir up trouble by calling for players to be eliminated the following day.
+  es_name: Alborotador
+  es_desc:
+
+mystic_seer:
+  team: village
+  value: 9
+  en_name: Mystic Seer
+  en_desc: Each night, point to a player and learn their exact role.
+  es_name: Vidente Mistica
+  es_desc:
+
+mentalist:
+  team: village
+  value: 6
+  en_name: Mentalist
+  en_desc: Each night you may point to two players, and are told if those players are on the same team or not.
+  es_name: Mentalista
+  es_desc:
+
+huntress:
+  team: village
+  value: 3
+  en_name: Huntress
+  en_desc: You may eliminate a player at night once per game.
+  es_name: Cazadora
+  es_desc:
+
+revealer:
+  team: village
+  value: 4
+  en_name: Revealer
+  en_desc: Each night you may point to a player. If that player is a Werewolf, he is eliminated. If he isn't, you are eliminated.
+  es_name: Revelador
+  es_desc:
+
+mad_bomber:
+  team: village
+  value: -2
+  en_name: Mad Bomber
+  en_desc: If you are eliminated, the players immediately to your left and right are eliminated as well.
+  es_name: Bomba
+  es_desc:
+
+alpha_wolf:
+  team: werewolves
+  value: -9
+  en_name: Alpha Wolf
+  en_desc: Once per game, following the elimination of a Werewolf during the day, you may turn the Werewolves target into a Werewolf instead of eliminating him.
+  es_name: Lobo Infecto
+  es_desc:

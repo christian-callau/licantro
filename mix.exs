@@ -47,7 +47,9 @@ defmodule Licantro.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:ueberauth_facebook, "~> 0.10"},
+      {:yaml_elixir, "~> 2.9"}
     ]
   end
 
