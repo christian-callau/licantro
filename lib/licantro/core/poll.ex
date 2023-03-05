@@ -5,12 +5,12 @@ defmodule Licantro.Core.Poll do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "polls" do
-    field :closed_at, :naive_datetime
+    field :game_id, :binary_id
     field :name, :string
     field :opened_at, :naive_datetime
-    field :game_id, :binary_id
+    field :closed_at, :naive_datetime
 
-    many_to_many :users, Licantro.Core.User, join_through: "polls_users"
+    many_to_many :users, Licantro.Core.User, join_through: "votes"
 
     timestamps()
   end

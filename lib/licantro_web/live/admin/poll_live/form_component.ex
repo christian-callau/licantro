@@ -74,9 +74,9 @@ defmodule LicantroWeb.Admin.PollLive.FormComponent do
     case Core.create_poll(Map.put(poll_params, "game_id", game_id)) do
       {:ok, poll} ->
         case Core.list_polls(game_id) do
-          [_ | [%{id: previous_poll_id} | _]] ->
-            for %{user_id: user_id} <- Core.list_poll_users(previous_poll_id) do
-              Core.create_poll_user(%{poll_id: poll.id, user_id: user_id})
+          [_ | [previous_poll | _]] ->
+            for %Licantro.Core.Vote{user_id: user_id} <- Core.list_votes(previous_poll.id) do
+              Core.create_vote(%{poll_id: poll.id, user_id: user_id})
             end
 
           _ ->

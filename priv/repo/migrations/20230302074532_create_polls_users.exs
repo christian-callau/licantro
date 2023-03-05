@@ -2,7 +2,7 @@ defmodule Licantro.Repo.Migrations.CreatePollsUsers do
   use Ecto.Migration
 
   def change do
-    create table(:polls_users, primary_key: false) do
+    create table(:votes, primary_key: false) do
       add :poll_id, references(:polls, on_delete: :delete_all, type: :binary_id),
         primary_key: true
 
@@ -14,7 +14,7 @@ defmodule Licantro.Repo.Migrations.CreatePollsUsers do
       timestamps()
     end
 
-    create index(:polls_users, [:poll_id])
-    create index(:polls_users, [:user_id])
+    create index(:votes, [:poll_id])
+    create index(:votes, [:user_id])
   end
 end

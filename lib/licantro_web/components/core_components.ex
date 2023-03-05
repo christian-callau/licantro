@@ -658,4 +658,52 @@ defmodule LicantroWeb.CoreComponents do
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
+
+  @doc """
+  Renders a facebook avatar.
+
+  """
+  attr :fbid, :string, required: true, doc: "the facebook id of the user"
+  attr :name, :string, required: true, doc: "the name of the user"
+
+  def fb_avatar_md(assigns) do
+    ~H"""
+    <%= if @fbid == nil do %>
+      <span class="flex justify-center items-center bg-blue-400 rounded-full w-14 h-14 text-2xl border border-neutral-700">
+        <%= initials(@name) %>
+      </span>
+    <% else %>
+      <img
+        src={"https://graph.facebook.com/#{@fbid}/picture"}
+        alt={initials(@name)}
+        class="rounded-full w-14 h-14 border border-neutral-700"
+      />
+    <% end %>
+    """
+  end
+
+  def fb_avatar_sm(assigns) do
+    ~H"""
+    <%= if @fbid == nil do %>
+      <span class="flex justify-center items-center bg-blue-400 rounded-full w-6 h-6 text-sm border border-neutral-700">
+        <%= initials(@name) %>
+      </span>
+    <% else %>
+      <img
+        src={"https://graph.facebook.com/#{@fbid}/picture"}
+        alt={initials(@name)}
+        class="rounded-full w-6 h-6 border border-neutral-700"
+      />
+    <% end %>
+    """
+  end
+
+  defp initials(name) do
+    name
+    |> String.split(" ")
+    |> Enum.slice(0, 2)
+    |> Enum.map(&String.at(&1, 0))
+    |> Enum.join()
+    |> String.upcase()
+  end
 end

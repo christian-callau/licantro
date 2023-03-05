@@ -8,8 +8,9 @@ defmodule Licantro.Core.User do
     field :fbid, :string
     field :name, :string
     field :role, :string, default: "user"
+    field :voters, {:array, :map}, virtual: true
 
-    many_to_many :polls, Licantro.Core.Poll, join_through: "polls_users"
+    many_to_many :polls, Licantro.Core.Poll, join_through: "votes"
 
     timestamps()
   end

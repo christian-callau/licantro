@@ -3,7 +3,7 @@ defmodule LicantroWeb.Admin.PlayerLive.Index do
 
   alias Licantro.Core
   alias Licantro.Core.User
-  alias Licantro.Core.PollUser
+  alias Licantro.Core.Vote
 
   @impl true
   def mount(%{"game_id" => game_id, "poll_id" => poll_id}, _session, socket) do
@@ -17,7 +17,7 @@ defmodule LicantroWeb.Admin.PlayerLive.Index do
   @impl true
   def handle_event("add", %{"poll_id" => poll_id, "user_id" => user_id}, socket) do
     %{poll_id: poll_id, user_id: user_id}
-    |> Core.create_poll_user()
+    |> Core.create_vote()
 
     socket
     |> assign_users(poll_id)
@@ -25,9 +25,9 @@ defmodule LicantroWeb.Admin.PlayerLive.Index do
   end
 
   def handle_event("remove", %{"poll_id" => poll_id, "user_id" => user_id}, socket) do
-    [poll_id: poll_id, user_id: user_id]
-    |> Core.get_poll_user!()
-    |> Core.delete_poll_user()
+    %{poll_id: poll_id, user_id: user_id}
+    |> Core.get_vote!()
+    |> Core.delete_vote()
 
     socket
     |> assign_users(poll_id)
@@ -36,11 +36,11 @@ defmodule LicantroWeb.Admin.PlayerLive.Index do
 
   defp assign_users(socket, poll_id) do
     users = Core.list_users()
-    poll_users = Core.list_poll_users(poll_id)
+    votes = Core.list_votes(poll_id)
 
     {users_included, users_excluded} =
       Enum.split_with(users, fn %User{id: id} ->
-        Enum.any?(poll_users, fn %PollUser{user_id: user_id} -> user_id == id end)
+        Enum.any?(votes, fn %Vote{user_id: user_id} -> user_id == id end)
       end)
 
     socket

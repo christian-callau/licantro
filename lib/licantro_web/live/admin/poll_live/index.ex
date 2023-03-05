@@ -28,8 +28,8 @@ defmodule LicantroWeb.Admin.PollLive.Index do
     |> assign(:page_title, "New Poll")
     |> assign(:poll, %Poll{
       game_id: game_id,
-      opened_at: NaiveDateTime.new!(Date.utc_today(), ~T[09:00:00]),
-      closed_at: NaiveDateTime.new!(Date.utc_today(), ~T[22:00:00])
+      opened_at: NaiveDateTime.new!(Date.utc_today(), ~T[08:00:00]),
+      closed_at: NaiveDateTime.new!(Date.utc_today(), ~T[21:00:00])
     })
   end
 
@@ -41,7 +41,7 @@ defmodule LicantroWeb.Admin.PollLive.Index do
 
   @impl true
   def handle_info({LicantroWeb.Admin.PollLive.FormComponent, {:saved, poll}}, socket) do
-    {:noreply, stream_insert(socket, :polls, poll)}
+    {:noreply, stream_insert(socket, :polls, poll, at: 0)}
   end
 
   @impl true

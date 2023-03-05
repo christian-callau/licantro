@@ -108,7 +108,7 @@ msgstr ""
 #: lib/licantro_web/live/admin/game_live/index.html.heex:2
 #: lib/licantro_web/live/admin/home_live/index.html.heex:11
 #: lib/licantro_web/live/game_live/index.html.heex:5
-#: lib/licantro_web/live/home_live/index.html.heex:3
+#: lib/licantro_web/live/home_live/index.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Games"
 msgstr ""
@@ -160,12 +160,12 @@ msgstr ""
 msgid "Save User"
 msgstr ""
 
-#: lib/licantro_web/live/home_live/index.html.heex:6
+#: lib/licantro_web/live/home_live/index.html.heex:16
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Admin"
 msgstr ""
 
-#: lib/licantro_web/live/home_live/index.html.heex:9
+#: lib/licantro_web/live/home_live/index.html.heex:13
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr ""
@@ -178,4 +178,14 @@ msgstr ""
 #: lib/licantro_web/live/poll_live/index.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "No polls found"
+msgstr ""
+
+#: lib/licantro_web/live/poll_live/live.html.heex:9
+#, elixir-autogen, elixir-format
+msgid "No voting"
+msgstr ""
+
+#: lib/licantro_web/live/roles_live/index.html.heex:3
+#, elixir-autogen, elixir-format
+msgid "Roles"
 msgstr ""

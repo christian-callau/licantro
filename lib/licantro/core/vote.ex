@@ -1,10 +1,10 @@
-defmodule Licantro.Core.PollUser do
+defmodule Licantro.Core.Vote do
   use Ecto.Schema
   import Ecto.Changeset
 
   @primary_key false
   @foreign_key_type :binary_id
-  schema "polls_users" do
+  schema "votes" do
     field :poll_id, :binary_id, primary_key: true
     field :user_id, :binary_id, primary_key: true
     field :vote_id, :binary_id

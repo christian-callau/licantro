@@ -7,6 +7,8 @@ defmodule Licantro.Core.Game do
   schema "games" do
     field :name, :string
 
+    has_many :polls, Licantro.Core.Poll
+
     timestamps()
   end
 

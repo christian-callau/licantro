@@ -90,38 +90,51 @@ defmodule Licantro.Core do
     Poll.changeset(poll, attrs)
   end
 
-  alias Licantro.Core.PollUser
+  alias Licantro.Core.Vote
 
-  def list_poll_users(poll_id) do
-    Repo.all(from p in PollUser, where: p.poll_id == ^poll_id)
+  def list_votes(poll_id) do
+    Repo.all(from p in Vote, where: p.poll_id == ^poll_id)
   end
 
-  def get_poll_users(poll_id) do
-    poll_id
-    |> get_poll!()
-    |> Ecto.assoc(:users)
-    |> Repo.all()
-  end
+  def get_vote!(%{poll_id: poll_id, user_id: user_id}),
+    do: Repo.get_by!(Vote, poll_id: poll_id, user_id: user_id)
 
-  def get_poll_user!(ids), do: Repo.get_by!(PollUser, ids)
-
-  def create_poll_user(attrs \\ %{}) do
-    %PollUser{}
-    |> PollUser.changeset(attrs)
+  def create_vote(attrs \\ %{}) do
+    %Vote{}
+    |> Vote.changeset(attrs)
     |> Repo.insert()
   end
 
-  def update_poll_user(%PollUser{} = poll_user, attrs) do
-    poll_user
-    |> PollUser.changeset(attrs)
+  def update_vote(%Vote{} = vote, attrs) do
+    vote
+    |> Vote.changeset(attrs)
     |> Repo.update()
   end
 
-  def delete_poll_user(%PollUser{} = poll_user) do
-    Repo.delete(poll_user)
+  def delete_vote(%Vote{} = vote) do
+    Repo.delete(vote)
   end
 
-  def change_poll_user(%PollUser{} = poll_user, attrs \\ %{}) do
-    PollUser.changeset(poll_user, attrs)
+  def change_vote(%Vote{} = vote, attrs \\ %{}) do
+    Vote.changeset(vote, attrs)
+  end
+
+  # Custom Bussines Logic
+
+  def broadcast({:error, _reason} = error, _topic, _event), do: error
+
+  def broadcast({:ok, entity}, topic, event) do
+    Phoenix.PubSub.broadcast(Licantro.PubSub, topic, {event, entity})
+    {:ok, entity}
+  end
+
+  def subscribe(topic) do
+    Phoenix.PubSub.subscribe(Licantro.PubSub, topic)
+  end
+
+  def list_poll_users(%Licantro.Core.Poll{} = poll) do
+    poll
+    |> Ecto.assoc(:users)
+    |> Repo.all()
   end
 end
