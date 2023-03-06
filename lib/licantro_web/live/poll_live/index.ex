@@ -8,7 +8,7 @@ defmodule LicantroWeb.PollLive.Index do
     socket
     |> assign(current_user: current_user)
     |> assign(game: Core.get_game!(game_id))
-    |> assign(polls: Core.list_polls(game_id))
+    |> assign(polls: Core.list_polls_limited(game_id))
     |> then(&{:ok, &1})
   end
 end

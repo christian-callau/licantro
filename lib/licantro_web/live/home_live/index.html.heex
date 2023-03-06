@@ -6,7 +6,7 @@
       <button class="w-1/3"></button>
     </header>
     <main class="flex flex-col">
-      <.link navigate={~p"/live"}>
+      <.link :if={@show_live} navigate={~p"/live"}>
         <div class="p-4 text-center text-2xl"><%= gettext("Current poll") %></div>
       </.link>
       <.link navigate={~p"/games"}>

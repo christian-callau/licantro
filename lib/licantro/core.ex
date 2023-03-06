@@ -61,11 +61,22 @@ defmodule Licantro.Core do
   alias Licantro.Core.Poll
 
   def list_polls do
-    Repo.all(Poll)
+    date = NaiveDateTime.utc_now()
+    Repo.all(from p in Poll, where: p.opened_at <= ^date)
   end
 
   def list_polls(game_id) do
     Repo.all(from p in Poll, where: p.game_id == ^game_id, order_by: [desc: :closed_at])
+  end
+
+  def list_polls_limited(game_id) do
+    date = NaiveDateTime.utc_now()
+
+    Repo.all(
+      from p in Poll,
+        where: p.game_id == ^game_id and p.opened_at <= ^date,
+        order_by: [desc: :closed_at]
+    )
   end
 
   def get_poll!(id), do: Repo.get!(Poll, id)
