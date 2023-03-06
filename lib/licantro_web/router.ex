@@ -44,6 +44,10 @@ defmodule LicantroWeb.Router do
     live "/games/:game_id/polls/:poll_id/live/novote", PollLive.Live, :novote
     live "/games/:game_id/polls/:poll_id/live/:user_id/votes", PollLive.Live, :votes
 
+    live "/live", PollLive.Live, :index
+    live "/live/novote", PollLive.Live, :novote
+    live "/live/:user_id/votes", PollLive.Live, :votes
+
     scope "/admin", Admin do
       pipe_through :require_admin
       live "/", HomeLive.Index

@@ -12,13 +12,25 @@ defmodule LicantroWeb.PollLive.Live do
       ) do
     game = Core.get_game!(game_id)
     poll = Core.get_poll!(poll_id)
+
+    finish_mount(socket, current_user, game, poll)
+  end
+
+  def mount(_params, %{"current_user" => current_user}, socket) do
+    poll = Core.get_newest_poll!()
+    game = Core.get_game!(poll.game_id)
+
+    finish_mount(socket, current_user, game, poll)
+  end
+
+  def finish_mount(socket, current_user, game, poll) do
     users = Core.list_poll_users(poll) |> Enum.sort(&(normalize(&1.name) < normalize(&2.name)))
-    votes = Core.list_votes(poll_id)
+    votes = Core.list_votes(poll.id)
     is_poll_open = is_poll_open?(poll)
     is_user_poll = is_user_poll?(users, current_user)
 
     if connected?(socket) do
-      Core.subscribe(poll_id)
+      Core.subscribe(poll.id)
 
       if is_poll_open do
         :timer.send_interval(1000, self(), :tick)

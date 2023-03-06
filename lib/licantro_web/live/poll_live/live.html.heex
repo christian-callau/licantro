@@ -72,17 +72,17 @@
   show
   on_cancel={JS.patch(~p"/games/#{@game.id}/polls/#{@poll.id}/live")}
 >
-  <:title><%= gettext("Sin votar") %></:title>
+  <:title><%= gettext("No voting") %></:title>
   <div class="px-4 py-2">
     <div class="text-2xl mx-1 mb-2">
       <span>
         <%= length(@users_novote) %>
       </span>
       <span :if={length(@users_novote) == 1}>
-        <%= gettext("persona") %>
+        <%= gettext("person") %>
       </span>
       <span :if={length(@users_novote) != 1}>
-        <%= gettext("personas") %>
+        <%= gettext("people") %>
       </span>
     </div>
     <div class="flex flex-col space-y-1 max-h-80 overflow-y-scroll">
@@ -107,10 +107,10 @@
         <%= length(@user_votes.voters) %>
       </span>
       <span :if={length(@user_votes.voters) == 1}>
-        <%= gettext("voto") %>
+        <%= gettext("vote") %>
       </span>
       <span :if={length(@user_votes.voters) != 1}>
-        <%= gettext("votos") %>
+        <%= gettext("votes") %>
       </span>
     </div>
     <div class="flex flex-col space-y-1 max-h-80 overflow-y-scroll">

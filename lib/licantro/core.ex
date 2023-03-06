@@ -70,6 +70,10 @@ defmodule Licantro.Core do
 
   def get_poll!(id), do: Repo.get!(Poll, id)
 
+  def get_newest_poll!() do
+    Repo.all(from p in Poll, order_by: [desc: :closed_at], limit: 1) |> List.first()
+  end
+
   def create_poll(attrs \\ %{}) do
     %Poll{}
     |> Poll.changeset(attrs)

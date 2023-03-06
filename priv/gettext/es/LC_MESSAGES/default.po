@@ -95,7 +95,7 @@ msgstr "Partida"
 #: lib/licantro_web/live/admin/game_live/index.html.heex:2
 #: lib/licantro_web/live/admin/home_live/index.html.heex:11
 #: lib/licantro_web/live/game_live/index.html.heex:5
-#: lib/licantro_web/live/home_live/index.html.heex:10
+#: lib/licantro_web/live/home_live/index.html.heex:13
 #, elixir-autogen, elixir-format
 msgid "Games"
 msgstr "Partidas"
@@ -147,12 +147,12 @@ msgstr "Menu de admin"
 msgid "Save User"
 msgstr "Guardar usuario"
 
-#: lib/licantro_web/live/home_live/index.html.heex:16
+#: lib/licantro_web/live/home_live/index.html.heex:19
 #, elixir-autogen, elixir-format
 msgid "Admin"
 msgstr "Administración"
 
-#: lib/licantro_web/live/home_live/index.html.heex:13
+#: lib/licantro_web/live/home_live/index.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr "Cerrar sesión"
@@ -167,7 +167,8 @@ msgstr "No hay partidas"
 msgid "No polls found"
 msgstr "No hay encuestas"
 
-#: lib/licantro_web/live/poll_live/live.html.heex:9
+#: lib/licantro_web/live/poll_live/live.html.heex:13
+#: lib/licantro_web/live/poll_live/live.html.heex:75
 #, elixir-autogen, elixir-format
 msgid "No voting"
 msgstr "Sin votar"
@@ -176,3 +177,28 @@ msgstr "Sin votar"
 #, elixir-autogen, elixir-format
 msgid "Roles"
 msgstr "Roles"
+
+#: lib/licantro_web/live/home_live/index.html.heex:10
+#, elixir-autogen, elixir-format
+msgid "Current poll"
+msgstr "Encuesta actual"
+
+#: lib/licantro_web/live/poll_live/live.html.heex:85
+#, elixir-autogen, elixir-format
+msgid "people"
+msgstr "personas"
+
+#: lib/licantro_web/live/poll_live/live.html.heex:82
+#, elixir-autogen, elixir-format
+msgid "person"
+msgstr "persona"
+
+#: lib/licantro_web/live/poll_live/live.html.heex:110
+#, elixir-autogen, elixir-format
+msgid "vote"
+msgstr "voto"
+
+#: lib/licantro_web/live/poll_live/live.html.heex:113
+#, elixir-autogen, elixir-format
+msgid "votes"
+msgstr "votos"
