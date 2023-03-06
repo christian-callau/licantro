@@ -13,8 +13,8 @@ defmodule Licantro.Core.Vote do
   end
 
   @doc false
-  def changeset(poll_user, attrs) do
-    poll_user
+  def changeset(vote, attrs) do
+    vote
     |> cast(attrs, [:poll_id, :user_id, :vote_id])
     |> validate_required([:poll_id, :user_id])
   end
