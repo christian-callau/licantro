@@ -6,7 +6,12 @@
           <%= gettext("Back") %>
         </.link>
         <h1 class="text-center text-2xl"><%= @game.name %> <%= @poll.name %></h1>
-        <button class="w-1/3 text-right"><%= gettext("No voting") %></button>
+        <.link
+          patch={~p"/games/#{@game.id}/polls/#{@poll.id}/live/novote"}
+          class="w-1/3 text-right"
+        >
+          <%= gettext("No voting") %>
+        </.link>
       </div>
       <div>
         <h1 class="text-center text-5xl"><%= format_time(@clock.time) %></h1>
@@ -20,9 +25,12 @@
         :for={%{id: id, fbid: fbid, name: name, voters: voters} <- @users_votes}
         class={"grid #{if @is_poll_open and @is_user_poll, do: 'grid-cols-[3.5rem_min(calc(100vw_-_10rem),_15rem)_3rem_3rem]', else: 'grid-cols-[4rem_min(calc(100vw_-_7rem),_18rem)_3rem]'}"}
       >
-        <div class="flex justify-center items-center cursor-pointer">
-          <.fb_avatar_md fbid={fbid} name={name} />
-        </div>
+        <.link
+          patch={~p"/games/#{@game.id}/polls/#{@poll.id}/live/#{id}/votes"}
+          class="flex justify-center items-center cursor-pointer"
+        >
+          <.fb_avatar_lg fbid={fbid} name={name} />
+        </.link>
 
         <div class="flex flex-col p-2">
           <div class="text-xl whitespace-nowrap overflow-hidden text-ellipsis">
@@ -57,3 +65,62 @@
     </main>
   </div>
 </div>
+
+<.poll_modal
+  :if={@live_action == :novote}
+  id="novote-modal"
+  show
+  on_cancel={JS.patch(~p"/games/#{@game.id}/polls/#{@poll.id}/live")}
+>
+  <:title><%= gettext("Sin votar") %></:title>
+  <div class="px-4 py-2">
+    <div class="text-2xl mx-1 mb-2">
+      <span>
+        <%= length(@users_novote) %>
+      </span>
+      <span :if={length(@users_novote) == 1}>
+        <%= gettext("persona") %>
+      </span>
+      <span :if={length(@users_novote) != 1}>
+        <%= gettext("personas") %>
+      </span>
+    </div>
+    <div class="flex flex-col space-y-1 max-h-80 overflow-y-scroll">
+      <div :for={%{fbid: fbid, name: name} <- @users_novote} class="flex items-center space-x-2">
+        <.fb_avatar_md fbid={fbid} name={name} />
+        <span><%= name %></span>
+      </div>
+    </div>
+  </div>
+</.poll_modal>
+
+<.poll_modal
+  :if={@live_action == :votes}
+  id="novote-modal"
+  show
+  on_cancel={JS.patch(~p"/games/#{@game.id}/polls/#{@poll.id}/live")}
+>
+  <:title><%= @user_votes.name %></:title>
+  <div class="px-4 py-2">
+    <div class="text-2xl mx-1 mb-2">
+      <span>
+        <%= length(@user_votes.voters) %>
+      </span>
+      <span :if={length(@user_votes.voters) == 1}>
+        <%= gettext("voto") %>
+      </span>
+      <span :if={length(@user_votes.voters) != 1}>
+        <%= gettext("votos") %>
+      </span>
+    </div>
+    <div class="flex flex-col space-y-1 max-h-80 overflow-y-scroll">
+      <div
+        :for={%{fbid: fbid, name: name} <- @user_votes.voters}
+        class="flex items-center space-x-2"
+      >
+        <.fb_avatar_md fbid={fbid} name={name} />
+        <span><%= name %></span>
+      </div>
+    </div>
+  </div>
+</.poll_modal>

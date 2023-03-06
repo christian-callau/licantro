@@ -45,6 +45,33 @@ defmodule LicantroWeb.PollLive.Live do
   end
 
   @impl true
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :index, _params) do
+    socket
+  end
+
+  defp apply_action(%{assigns: %{users: users, votes: votes}} = socket, :novote, _params) do
+    users_novote =
+      Enum.filter(users, fn user ->
+        %Licantro.Core.Vote{vote_id: vote_id} = Enum.find(votes, &(&1.user_id == user.id))
+        vote_id == nil and user.fbid != nil
+      end)
+
+    socket
+    |> assign(:users_novote, users_novote)
+  end
+
+  defp apply_action(%{assigns: %{users_votes: users_votes}} = socket, :votes, %{
+         "user_id" => user_id
+       }) do
+    socket
+    |> assign(:user_votes, Enum.find(users_votes, &(&1.id == user_id)))
+  end
+
+  @impl true
   def handle_event(
         "vote",
         %{"vote_id" => vote_id},
@@ -128,7 +155,7 @@ defmodule LicantroWeb.PollLive.Live do
 
   defp compute_clock(%{closed_at: closed_at}, true) do
     time = Time.utc_now()
-    down = Time.diff(closed_at, time) + 1
+    down = NaiveDateTime.diff(closed_at, NaiveDateTime.utc_now()) + 1
 
     %{time: time, down: down}
   end
@@ -143,9 +170,9 @@ defmodule LicantroWeb.PollLive.Live do
 
   defp format_down(down) do
     [
-      down |> div(3600) |> rem(60) |> Integer.to_string() |> String.pad_leading(2, "0"),
+      down |> div(3600) |> Integer.to_string() |> String.pad_leading(2, "0"),
       down |> div(60) |> rem(60) |> Integer.to_string() |> String.pad_leading(2, "0"),
-      down |> div(1) |> rem(60) |> Integer.to_string() |> String.pad_leading(2, "0")
+      down |> rem(60) |> Integer.to_string() |> String.pad_leading(2, "0")
     ]
     |> Enum.join(":")
   end

@@ -666,7 +666,7 @@ defmodule LicantroWeb.CoreComponents do
   attr :fbid, :string, required: true, doc: "the facebook id of the user"
   attr :name, :string, required: true, doc: "the name of the user"
 
-  def fb_avatar_md(assigns) do
+  def fb_avatar_lg(assigns) do
     ~H"""
     <%= if @fbid == nil do %>
       <span class="flex justify-center items-center bg-blue-400 rounded-full w-14 h-14 text-2xl border border-neutral-700">
@@ -677,6 +677,22 @@ defmodule LicantroWeb.CoreComponents do
         src={"https://graph.facebook.com/#{@fbid}/picture"}
         alt={initials(@name)}
         class="rounded-full w-14 h-14 border border-neutral-700"
+      />
+    <% end %>
+    """
+  end
+
+  def fb_avatar_md(assigns) do
+    ~H"""
+    <%= if @fbid == nil do %>
+      <span class="flex justify-center items-center bg-blue-400 rounded-full w-10 h-10 text-xl border border-neutral-700">
+        <%= initials(@name) %>
+      </span>
+    <% else %>
+      <img
+        src={"https://graph.facebook.com/#{@fbid}/picture"}
+        alt={initials(@name)}
+        class="rounded-full w-10 h-10 border border-neutral-700"
       />
     <% end %>
     """
@@ -705,5 +721,79 @@ defmodule LicantroWeb.CoreComponents do
     |> Enum.map(&String.at(&1, 0))
     |> Enum.join()
     |> String.upcase()
+  end
+
+  attr :id, :string, required: true
+  attr :show, :boolean, default: false
+  attr :on_cancel, JS, default: %JS{}
+
+  slot :inner_block, required: true
+  slot :title
+
+  @doc """
+  Renders a modal.
+  """
+  def poll_modal(assigns) do
+    ~H"""
+    <div
+      id={@id}
+      phx-mounted={@show && show_modal(@id)}
+      phx-remove={hide_modal(@id)}
+      class="relative z-50 hidden"
+    >
+      <div id={"#{@id}-bg"} class="fixed inset-0 bg-black/30 transition-opacity" aria-hidden="true" />
+      <div
+        class="fixed inset-0 overflow-y-auto"
+        aria-labelledby={"#{@id}-title"}
+        aria-describedby={"#{@id}-description"}
+        role="dialog"
+        aria-modal="true"
+        tabindex="0"
+      >
+        <div class="flex min-h-full items-center justify-center">
+          <div
+            id={"#{@id}-container"}
+            phx-mounted={@show && show_modal(@id)}
+            phx-window-keydown={hide_modal(@on_cancel, @id)}
+            phx-key="escape"
+            phx-click-away={hide_modal(@on_cancel, @id)}
+            class="hidden relative bg-neutral-900 border border-neutral-800 rounded-lg transition w-[min(calc(100vw_-_2rem),_22rem)]"
+          >
+            <span
+              phx-click={hide_modal(@on_cancel, @id)}
+              class="absolute top-2.5 right-2.5 h-9 w-9 flex items-center justify-center rounded-full bg-neutral-700 cursor-pointer"
+            >
+              <svg
+                class="h-7 w-7"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </span>
+            <div id={"#{@id}-content"}>
+              <header
+                :if={@title != []}
+                class="flex justify-center items-center p-3 border-b border-neutral-800"
+              >
+                <h1 id={"#{@id}-title"} class="text-2xl">
+                  <%= render_slot(@title) %>
+                </h1>
+              </header>
+              <%= render_slot(@inner_block) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    """
   end
 end

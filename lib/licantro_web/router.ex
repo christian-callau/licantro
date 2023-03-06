@@ -33,10 +33,16 @@ defmodule LicantroWeb.Router do
 
     pipe_through :require_user
     live "/", HomeLive.Index
+
     live "/roles", RolesLive.Index
+
     live "/games", GameLive.Index
+
     live "/games/:game_id/polls", PollLive.Index
-    live "/games/:game_id/polls/:poll_id/live", PollLive.Live
+
+    live "/games/:game_id/polls/:poll_id/live", PollLive.Live, :index
+    live "/games/:game_id/polls/:poll_id/live/novote", PollLive.Live, :novote
+    live "/games/:game_id/polls/:poll_id/live/:user_id/votes", PollLive.Live, :votes
 
     scope "/admin", Admin do
       pipe_through :require_admin
