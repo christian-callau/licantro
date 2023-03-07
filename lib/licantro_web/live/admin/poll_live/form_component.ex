@@ -69,18 +69,18 @@ defmodule LicantroWeb.Admin.PollLive.FormComponent do
   end
 
   defp save_poll(socket, :new, poll_params) do
-    game_id = socket.assigns.poll.game_id
+    game_id = socket.assigns.game.id
 
-    case Core.create_poll(Map.put(poll_params, "game_id", game_id)) do
+    votes =
+      case game_id |> Core.list_polls() |> List.first() do
+        %Core.Poll{id: poll_id} -> Core.list_votes(poll_id)
+        _ -> []
+      end
+
+    case poll_params |> Map.put("game_id", game_id) |> Core.create_poll() do
       {:ok, poll} ->
-        case Core.list_polls(game_id) do
-          [_ | [previous_poll | _]] ->
-            for %Licantro.Core.Vote{user_id: user_id} <- Core.list_votes(previous_poll.id) do
-              Core.create_vote(%{poll_id: poll.id, user_id: user_id})
-            end
-
-          _ ->
-            nil
+        for %{user_id: user_id} <- votes do
+          Core.create_vote(%{poll_id: poll.id, user_id: user_id})
         end
 
         notify_parent({:saved, poll})

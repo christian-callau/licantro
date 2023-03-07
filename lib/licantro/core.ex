@@ -62,11 +62,16 @@ defmodule Licantro.Core do
 
   def list_polls do
     date = NaiveDateTime.utc_now()
+
     Repo.all(from p in Poll, where: p.opened_at <= ^date)
   end
 
   def list_polls(game_id) do
-    Repo.all(from p in Poll, where: p.game_id == ^game_id, order_by: [desc: :closed_at])
+    Repo.all(
+      from p in Poll,
+        where: p.game_id == ^game_id,
+        order_by: [desc: :closed_at]
+    )
   end
 
   def list_polls_limited(game_id) do
@@ -82,7 +87,15 @@ defmodule Licantro.Core do
   def get_poll!(id), do: Repo.get!(Poll, id)
 
   def get_newest_poll!() do
-    Repo.all(from p in Poll, order_by: [desc: :closed_at], limit: 1) |> List.first()
+    date = NaiveDateTime.utc_now()
+
+    Repo.all(
+      from p in Poll,
+        where: p.opened_at <= ^date,
+        order_by: [desc: :closed_at],
+        limit: 1
+    )
+    |> List.first()
   end
 
   def create_poll(attrs \\ %{}) do

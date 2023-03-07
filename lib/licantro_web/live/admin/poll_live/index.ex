@@ -28,7 +28,7 @@ defmodule LicantroWeb.Admin.PollLive.Index do
     |> assign(:page_title, "New Poll")
     |> assign(:poll, %Poll{
       game_id: game_id,
-      opened_at: NaiveDateTime.new!(Date.utc_today(), ~T[08:00:00]),
+      opened_at: NaiveDateTime.new!(Date.utc_today(), ~T[09:00:00]),
       closed_at: NaiveDateTime.new!(Date.utc_today(), ~T[21:00:00])
     })
   end
