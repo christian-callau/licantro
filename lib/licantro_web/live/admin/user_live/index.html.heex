@@ -15,6 +15,7 @@
   rows={@streams.users}
   row_click={fn {_id, user} -> JS.navigate(~p"/admin/users/#{user}") end}
 >
+  <:col :let={{_id, user}} label="Fbid"><%= user.fbid %></:col>
   <:col :let={{_id, user}} label="Name"><%= user.name %></:col>
   <:col :let={{_id, user}} label="Role"><%= user.role %></:col>
   <:action :let={{_id, user}}>
@@ -22,6 +23,14 @@
       <.link navigate={~p"/admin/users/#{user}"}><%= gettext("Show") %></.link>
     </div>
     <.link patch={~p"/admin/users/#{user}/edit"}><%= gettext("Edit") %></.link>
+  </:action>
+  <:action :let={{id, user}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: user.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      <%= gettext("Delete") %>
+    </.link>
   </:action>
 </.table>
 

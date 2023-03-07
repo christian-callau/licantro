@@ -2,10 +2,10 @@ defmodule Licantro.Core.Poll do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  @primary_key {:id, Ecto.ULID, autogenerate: true}
+  @foreign_key_type Ecto.ULID
   schema "polls" do
-    field :game_id, :binary_id
+    field :game_id, Ecto.ULID
     field :name, :string
     field :opened_at, :naive_datetime
     field :closed_at, :naive_datetime

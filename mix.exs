@@ -49,7 +49,8 @@ defmodule Licantro.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:ueberauth_facebook, "~> 0.10"},
-      {:yaml_elixir, "~> 2.9"}
+      {:yaml_elixir, "~> 2.9"},
+      {:ecto_ulid, "~> 0.3.0"}
     ]
   end
 
