@@ -2,6 +2,15 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@font-face {
+  font-family: Lycanthrope;
+  src: url("/fonts/Lycanthrope.ttf");
+}
+
+.lycanthrope {
+  font-family: Lycanthrope;
+}
+
 .background {
   background-image: url("/images/bg.webp");
   background-position: center center;
