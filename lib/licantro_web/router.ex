@@ -1,6 +1,8 @@
 defmodule LicantroWeb.Router do
   use LicantroWeb, :router
 
+  import LicantroWeb.Auth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,71 +10,76 @@ defmodule LicantroWeb.Router do
     plug :put_root_layout, {LicantroWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-  end
-
-  pipeline :require_user do
-    plug(LicantroWeb.AuthPlug)
-  end
-
-  pipeline :require_admin do
-    plug(LicantroWeb.AdminPlug)
-  end
-
-  scope "/auth", LicantroWeb do
-    pipe_through :browser
-    get "/facebook", AuthController, :request
-    get "/facebook/callback", AuthController, :callback
-
-    pipe_through :require_user
-    delete "/logout", AuthController, :delete
+    plug :fetch_current_user
   end
 
   scope "/", LicantroWeb do
-    pipe_through :browser
-    get "/login", PageController, :login
+    pipe_through [:browser, :redirect_if_authenticated]
 
-    pipe_through :require_user
-    live "/", HomeLive.Index
+    get "/login", AuthController, :login
+    get "/auth/facebook", AuthController, :request
+    get "/auth/facebook/callback", AuthController, :callback
+  end
 
-    live "/roles", RolesLive.Index
+  scope "/", LicantroWeb do
+    pipe_through [:browser]
 
-    live "/games", GameLive.Index
+    delete "/auth/logout", AuthController, :delete
+  end
 
-    live "/games/:game_id/polls", PollLive.Index
+  scope "/", LicantroWeb do
+    pipe_through [:browser, :require_authenticated]
 
-    live "/games/:game_id/polls/:poll_id/live", PollLive.Live, :index
-    live "/games/:game_id/polls/:poll_id/live/novote", PollLive.Live, :novote
-    live "/games/:game_id/polls/:poll_id/live/:user_id/votes", PollLive.Live, :votes
+    live_session :require_authenticated, on_mount: [{LicantroWeb.Auth, :ensure_authenticated}] do
+      live "/", HomeLive
+      live "/roles", RolesLive
+      live "/games", GamesLive
 
-    live "/live", PollLive.Live, :index
-    live "/live/novote", PollLive.Live, :novote
-    live "/live/:user_id/votes", PollLive.Live, :votes
+      scope "/games/:game_id" do
+        live "/polls", PollsLive
 
-    scope "/admin", Admin do
-      pipe_through :require_admin
-      live "/", HomeLive.Index
+        scope "/polls/:poll_id" do
+          live "/live", PollLive, :index
+          live "/live/novote", PollLive, :novote
+          live "/live/:user_id/votes", PollLive, :votes
+        end
+      end
 
-      live "/users", UserLive.Index, :index
-      live "/users/new", UserLive.Index, :new
-      live "/users/:id/edit", UserLive.Index, :edit
-      live "/users/:id", UserLive.Show, :show
-      live "/users/:id/show/edit", UserLive.Show, :edit
+      live "/live", PollLive, :index
+      live "/live/novote", PollLive, :novote
+      live "/live/:user_id/votes", PollLive, :votes
+    end
 
-      live "/games", GameLive.Index, :index
-      live "/games/new", GameLive.Index, :new
-      live "/games/:id/edit", GameLive.Index, :edit
-      live "/games/:id", GameLive.Show, :show
-      live "/games/:id/show/edit", GameLive.Show, :edit
+    live_session :require_administrator, on_mount: [{LicantroWeb.Auth, :ensure_administrator}] do
+      scope "/admin", Admin do
+        live "/", HomeLive
 
-      live "/games/:game_id/polls", PollLive.Index, :index
-      live "/games/:game_id/polls/new", PollLive.Index, :new
-      live "/games/:game_id/polls/:id/edit", PollLive.Index, :edit
-      live "/games/:game_id/polls/:id", PollLive.Show, :show
-      live "/games/:game_id/polls/:id/show/edit", PollLive.Show, :edit
+        live "/users", UserLive.Index, :index
+        live "/users/new", UserLive.Index, :new
+        live "/users/:id/edit", UserLive.Index, :edit
+        live "/users/:id", UserLive.Show, :show
+        live "/users/:id/show/edit", UserLive.Show, :edit
 
-      live "/games/:game_id/polls/:poll_id/players", PlayerLive.Index, :index
-      live "/games/:game_id/polls/:poll_id/players/new", PlayerLive.Index, :new
-      live "/games/:game_id/polls/:poll_id/players/:id/edit", PlayerLive.Index, :edit
+        live "/games", GameLive.Index, :index
+        live "/games/new", GameLive.Index, :new
+        live "/games/:id/edit", GameLive.Index, :edit
+        live "/games/:id", GameLive.Show, :show
+        live "/games/:id/show/edit", GameLive.Show, :edit
+
+        scope "/games/:game_id" do
+          live "/polls", PollLive.Index, :index
+          live "/polls/new", PollLive.Index, :new
+          live "/polls/:id/edit", PollLive.Index, :edit
+          live "/polls/:id", PollLive.Show, :show
+          live "/polls/:id/show/edit", PollLive.Show, :edit
+
+          scope "/polls/:poll_id" do
+            live "/players", VoteLive.Index, :index
+            live "/players/new", VoteLive.Index, :new
+            live "/players/:id/edit", VoteLive.Index, :edit
+          end
+        end
+      end
     end
   end
 end

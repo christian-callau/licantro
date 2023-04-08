@@ -1,12 +1,14 @@
 defmodule LicantroWeb.Admin.GameLive.Index do
-  use LicantroWeb, :live_view_admin
+  use LicantroWeb, :live_view
 
-  alias Licantro.Core
-  alias Licantro.Core.Game
+  alias Licantro.Games
+  alias Licantro.Games.Game
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :games, Core.list_games())}
+    socket
+    |> stream(:games, Games.list_games())
+    |> then(&{:ok, &1})
   end
 
   @impl true
@@ -17,7 +19,7 @@ defmodule LicantroWeb.Admin.GameLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Game")
-    |> assign(:game, Core.get_game!(id))
+    |> assign(:game, Games.get_game!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -39,8 +41,8 @@ defmodule LicantroWeb.Admin.GameLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    game = Core.get_game!(id)
-    {:ok, _} = Core.delete_game(game)
+    game = Games.get_game!(id)
+    {:ok, _} = Games.delete_game(game)
 
     {:noreply, stream_delete(socket, :games, game)}
   end

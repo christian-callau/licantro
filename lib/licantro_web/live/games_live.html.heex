@@ -1,0 +1,22 @@
+<div class="flex justify-center">
+  <div class="w-[25rem] flex flex-col">
+    <header class="flex justify-center p-4 sticky top-0 bg-black border-b border-neutral-800">
+      <.link navigate={~p"/"} class="absolute left-4">
+        <Heroicons.chevron_left class="h-8" />
+      </.link>
+      <h1 class="text-2xl"><%= gettext("Games") %></h1>
+    </header>
+    <main class="flex flex-col">
+      <.link
+        :for={%{id: game_id, name: name} <- @games}
+        navigate={~p"/games/#{game_id}/polls"}
+        class="px-4"
+      >
+        <div class="p-4 text-2xl text-center"><%= name %></div>
+      </.link>
+      <div :if={length(@games) == 0} class="p-4 text-center text-2xl">
+        <%= gettext("No games found") %>
+      </div>
+    </main>
+  </div>
+</div>

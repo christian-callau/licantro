@@ -1,0 +1,21 @@
+<div class="flex justify-center">
+  <div class="w-[25rem] flex flex-col">
+    <header class="flex justify-center p-4 sticky top-0 bg-black border-b border-neutral-800">
+      <h1 class="text-2xl">LicantroGIE</h1>
+    </header>
+    <main class="flex flex-col">
+      <.link :if={@show_live} navigate={~p"/live"}>
+        <div class="p-4 text-center text-2xl"><%= gettext("Current poll") %></div>
+      </.link>
+      <.link navigate={~p"/games"}>
+        <div class="p-4 text-center text-2xl"><%= gettext("Games") %></div>
+      </.link>
+      <.link :if={Users.is_admin?(@current_user)} navigate={~p"/admin"}>
+        <div class="p-4 text-center text-2xl"><%= gettext("Admin") %></div>
+      </.link>
+      <.link href={~p"/auth/logout"} method="delete">
+        <div class="p-4 text-center text-2xl"><%= gettext("Log out") %></div>
+      </.link>
+    </main>
+  </div>
+</div>

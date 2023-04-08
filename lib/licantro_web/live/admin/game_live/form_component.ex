@@ -1,7 +1,7 @@
 defmodule LicantroWeb.Admin.GameLive.FormComponent do
   use LicantroWeb, :live_component
 
-  alias Licantro.Core
+  alias Licantro.Games
 
   @impl true
   def render(assigns) do
@@ -20,7 +20,7 @@ defmodule LicantroWeb.Admin.GameLive.FormComponent do
       >
         <.input field={@form[:name]} type="text" label="Name" />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Game</.button>
+          <.button phx-disable-with="Saving..."><%= gettext("Save Game") %></.button>
         </:actions>
       </.simple_form>
     </div>
@@ -29,7 +29,7 @@ defmodule LicantroWeb.Admin.GameLive.FormComponent do
 
   @impl true
   def update(%{game: game} = assigns, socket) do
-    changeset = Core.change_game(game)
+    changeset = Games.change_game(game)
 
     {:ok,
      socket
@@ -41,7 +41,7 @@ defmodule LicantroWeb.Admin.GameLive.FormComponent do
   def handle_event("validate", %{"game" => game_params}, socket) do
     changeset =
       socket.assigns.game
-      |> Core.change_game(game_params)
+      |> Games.change_game(game_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
@@ -52,7 +52,7 @@ defmodule LicantroWeb.Admin.GameLive.FormComponent do
   end
 
   defp save_game(socket, :edit, game_params) do
-    case Core.update_game(socket.assigns.game, game_params) do
+    case Games.update_game(socket.assigns.game, game_params) do
       {:ok, game} ->
         notify_parent({:saved, game})
 
@@ -67,7 +67,7 @@ defmodule LicantroWeb.Admin.GameLive.FormComponent do
   end
 
   defp save_game(socket, :new, game_params) do
-    case Core.create_game(game_params) do
+    case Games.create_game(game_params) do
       {:ok, game} ->
         notify_parent({:saved, game})
 

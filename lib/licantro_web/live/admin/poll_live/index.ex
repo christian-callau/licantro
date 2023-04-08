@@ -1,14 +1,15 @@
 defmodule LicantroWeb.Admin.PollLive.Index do
-  use LicantroWeb, :live_view_admin
+  use LicantroWeb, :live_view
 
-  alias Licantro.Core
-  alias Licantro.Core.Poll
+  alias Licantro.Games
+  alias Licantro.Polls
+  alias Licantro.Polls.Poll
 
   @impl true
   def mount(%{"game_id" => game_id}, _session, socket) do
     socket
-    |> assign(game: Core.get_game!(game_id))
-    |> stream(:polls, Core.list_polls(game_id))
+    |> assign(game: Games.get_game!(game_id))
+    |> stream(:polls, Polls.list_polls(game_id))
     |> then(&{:ok, &1})
   end
 
@@ -20,7 +21,7 @@ defmodule LicantroWeb.Admin.PollLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Poll")
-    |> assign(:poll, Core.get_poll!(id))
+    |> assign(:poll, Polls.get_poll!(id))
   end
 
   defp apply_action(socket, :new, %{"game_id" => game_id}) do
@@ -46,8 +47,8 @@ defmodule LicantroWeb.Admin.PollLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    poll = Core.get_poll!(id)
-    {:ok, _} = Core.delete_poll(poll)
+    poll = Polls.get_poll!(id)
+    {:ok, _} = Polls.delete_poll(poll)
 
     {:noreply, stream_delete(socket, :polls, poll)}
   end

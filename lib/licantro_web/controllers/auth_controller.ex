@@ -3,13 +3,20 @@ defmodule LicantroWeb.AuthController do
 
   plug Ueberauth
 
+  alias Licantro.Users
   alias Ueberauth.Auth
-  alias Licantro.Core.User
-  alias Licantro.Repo
+
+  def login(conn, _params) do
+    render(conn, :login)
+  end
 
   def delete(conn, _params) do
+    if live_socket_id = get_session(conn, :live_socket_id) do
+      LicantroWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
+    end
+
     conn
-    |> clear_session()
+    |> renew_session()
     |> redirect(to: ~p"/")
   end
 
@@ -19,44 +26,31 @@ defmodule LicantroWeb.AuthController do
     |> redirect(to: ~p"/")
   end
 
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    {:ok, user} = upsert_user(auth)
+  def callback(
+        %{assigns: %{ueberauth_auth: %Auth{uid: uid, info: %{name: name}}}} = conn,
+        _params
+      ) do
+    Users.upsert_user(%{uid: uid, name: name})
+    user_return_to = get_session(conn, :user_return_to)
 
     conn
-    |> put_session(:current_user, user)
+    |> renew_session()
+    |> put_uid_in_session(uid)
+    |> redirect(to: user_return_to || ~p"/")
+  end
+
+  defp renew_session(conn) do
+    preferred_locale = get_session(conn, :preferred_locale)
+
+    conn
     |> configure_session(renew: true)
-    |> redirect(to: ~p"/")
+    |> clear_session()
+    |> put_session(:preferred_locale, preferred_locale)
   end
 
-  defp upsert_user(%Auth{info: %{name: name}, uid: fbid}) do
-    update_name(fbid, name)
-  end
-
-  defp update_name(fbid, name) do
-    case Repo.get_by(User, fbid: fbid) do
-      nil ->
-        update_fbid(fbid, name)
-
-      user ->
-        user
-        |> Ecto.Changeset.change(name: name)
-        |> Repo.update()
-    end
-  end
-
-  defp update_fbid(fbid, name) do
-    case Repo.get_by(User, name: name) do
-      nil ->
-        inser_user(fbid, name)
-
-      user ->
-        user
-        |> Ecto.Changeset.change(fbid: fbid)
-        |> Repo.update()
-    end
-  end
-
-  defp inser_user(fbid, name) do
-    Repo.insert(%User{fbid: fbid, name: name})
+  defp put_uid_in_session(conn, uid) do
+    conn
+    |> put_session(:user_uid, uid)
+    |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(uid)}")
   end
 end

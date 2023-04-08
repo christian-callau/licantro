@@ -1,7 +1,8 @@
 defmodule LicantroWeb.Admin.PollLive.FormComponent do
   use LicantroWeb, :live_component
 
-  alias Licantro.Core
+  alias Licantro.Polls
+  alias Licantro.Votes
 
   @impl true
   def render(assigns) do
@@ -22,7 +23,7 @@ defmodule LicantroWeb.Admin.PollLive.FormComponent do
         <.input field={@form[:opened_at]} type="datetime-local" label="Opened at" />
         <.input field={@form[:closed_at]} type="datetime-local" label="Closed at" />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Poll</.button>
+          <.button phx-disable-with="Saving..."><%= gettext("Save Poll") %></.button>
         </:actions>
       </.simple_form>
     </div>
@@ -31,7 +32,7 @@ defmodule LicantroWeb.Admin.PollLive.FormComponent do
 
   @impl true
   def update(%{poll: poll} = assigns, socket) do
-    changeset = Core.change_poll(poll)
+    changeset = Polls.change_poll(poll)
 
     {:ok,
      socket
@@ -43,7 +44,7 @@ defmodule LicantroWeb.Admin.PollLive.FormComponent do
   def handle_event("validate", %{"poll" => poll_params}, socket) do
     changeset =
       socket.assigns.poll
-      |> Core.change_poll(poll_params)
+      |> Polls.change_poll(poll_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
@@ -54,7 +55,7 @@ defmodule LicantroWeb.Admin.PollLive.FormComponent do
   end
 
   defp save_poll(socket, :edit, poll_params) do
-    case Core.update_poll(socket.assigns.poll, poll_params) do
+    case Polls.update_poll(socket.assigns.poll, poll_params) do
       {:ok, poll} ->
         notify_parent({:saved, poll})
 
@@ -72,15 +73,15 @@ defmodule LicantroWeb.Admin.PollLive.FormComponent do
     game_id = socket.assigns.game.id
 
     votes =
-      case game_id |> Core.list_polls() |> List.first() do
-        %Core.Poll{id: poll_id} -> Core.list_votes(poll_id)
+      case game_id |> Polls.list_polls() |> List.first() do
+        %Polls.Poll{id: poll_id} -> Votes.list_votes(poll_id)
         _ -> []
       end
 
-    case poll_params |> Map.put("game_id", game_id) |> Core.create_poll() do
+    case poll_params |> Map.put("game_id", game_id) |> Polls.create_poll() do
       {:ok, poll} ->
         for %{user_id: user_id} <- votes do
-          Core.create_vote(%{poll_id: poll.id, user_id: user_id})
+          Votes.create_vote(%{poll_id: poll.id, user_id: user_id})
         end
 
         notify_parent({:saved, poll})

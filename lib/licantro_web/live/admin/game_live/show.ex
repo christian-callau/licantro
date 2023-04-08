@@ -1,11 +1,12 @@
 defmodule LicantroWeb.Admin.GameLive.Show do
-  use LicantroWeb, :live_view_admin
+  use LicantroWeb, :live_view
 
-  alias Licantro.Core
+  alias Licantro.Games
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    socket
+    |> then(&{:ok, &1})
   end
 
   @impl true
@@ -13,7 +14,7 @@ defmodule LicantroWeb.Admin.GameLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:game, Core.get_game!(id))}
+     |> assign(:game, Games.get_game!(id))}
   end
 
   defp page_title(:show), do: "Show Game"

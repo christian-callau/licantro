@@ -1,0 +1,14 @@
+<.header>
+  <%= gettext("Admin Panel") %>
+</.header>
+
+<.back navigate={~p"/"}><%= gettext("Back to Home") %></.back>
+
+<div class="flex space-x-2 mt-10">
+  <.link navigate={~p"/admin/users"}>
+    <.button><%= gettext("Users") %></.button>
+  </.link>
+  <.link navigate={~p"/admin/games"}>
+    <.button><%= gettext("Games") %></.button>
+  </.link>
+</div>

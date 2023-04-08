@@ -1,14 +1,13 @@
 <.header>
   <%= gettext("Poll") %> <%= @poll.id %>
   <:actions>
-    <.link
-      patch={~p"/admin/games/#{@game.id}/polls/#{@poll}/show/edit"}
-      phx-click={JS.push_focus()}
-    >
+    <.link patch={~p"/admin/games/#{@game}/polls/#{@poll}/show/edit"} phx-click={JS.push_focus()}>
       <.button><%= gettext("Edit poll") %></.button>
     </.link>
   </:actions>
 </.header>
+
+<.back navigate={~p"/admin/games/#{@game}/polls"}><%= gettext("Back to Polls") %></.back>
 
 <.list>
   <:item title="Game"><%= @game.name %></:item>
@@ -17,13 +16,11 @@
   <:item title="Closed at"><%= @poll.closed_at %></:item>
 </.list>
 
-<.back navigate={~p"/admin/games/#{@game.id}/polls"}><%= gettext("Back to polls") %></.back>
-
 <.modal
   :if={@live_action == :edit}
   id="poll-modal"
   show
-  on_cancel={JS.patch(~p"/admin/games/#{@game.id}/polls/#{@poll}")}
+  on_cancel={JS.patch(~p"/admin/games/#{@game}/polls/#{@poll}")}
 >
   <.live_component
     module={LicantroWeb.Admin.PollLive.FormComponent}
@@ -31,6 +28,6 @@
     title={@page_title}
     action={@live_action}
     poll={@poll}
-    patch={~p"/admin/games/#{@game.id}/polls/#{@poll}"}
+    patch={~p"/admin/games/#{@game}/polls/#{@poll}"}
   />
 </.modal>

@@ -1,0 +1,33 @@
+<.header>
+  <%= @game.name %> : <%= @poll.name %> : <%= gettext("Players") %>
+</.header>
+
+<.back navigate={~p"/admin/games/#{@game}/polls"}><%= gettext("Back to Polls") %></.back>
+
+<.table id="users_included" rows={@users_included}>
+  <:col :let={user} label="Name"><%= user.name %></:col>
+  <:action :let={user}>
+    <span
+      phx-click="remove"
+      phx-value-poll_id={@poll.id}
+      phx-value-user_id={user.id}
+      class="cursor-pointer"
+    >
+      <%= gettext("Remove") %>
+    </span>
+  </:action>
+</.table>
+
+<.table id="users_excluded" rows={@users_excluded}>
+  <:col :let={user} label="Name"><%= user.name %></:col>
+  <:action :let={user}>
+    <span
+      phx-click="add"
+      phx-value-poll_id={@poll.id}
+      phx-value-user_id={user.id}
+      class="cursor-pointer"
+    >
+      <%= gettext("Add") %>
+    </span>
+  </:action>
+</.table>

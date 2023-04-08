@@ -7,13 +7,13 @@
   </:actions>
 </.header>
 
+<.back navigate={~p"/admin/users"}><%= gettext("Back to Users") %></.back>
+
 <.list>
-  <:item title="Fbid"><%= @user.fbid %></:item>
+  <:item title="Uid"><%= @user.uid %></:item>
   <:item title="Name"><%= @user.name %></:item>
   <:item title="Role"><%= @user.role %></:item>
 </.list>
-
-<.back navigate={~p"/admin/users"}><%= gettext("Back to users") %></.back>
 
 <.modal
   :if={@live_action == :edit}

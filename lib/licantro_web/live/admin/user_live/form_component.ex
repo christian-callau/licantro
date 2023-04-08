@@ -1,7 +1,7 @@
 defmodule LicantroWeb.Admin.UserLive.FormComponent do
   use LicantroWeb, :live_component
 
-  alias Licantro.Core
+  alias Licantro.Users
 
   @impl true
   def render(assigns) do
@@ -18,7 +18,7 @@ defmodule LicantroWeb.Admin.UserLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:fbid]} type="text" label="Fbid" />
+        <.input field={@form[:uid]} type="text" label="Uid" />
         <.input field={@form[:name]} type="text" label="Name" />
         <.input field={@form[:role]} type="text" label="Role" />
         <:actions>
@@ -31,7 +31,7 @@ defmodule LicantroWeb.Admin.UserLive.FormComponent do
 
   @impl true
   def update(%{user: user} = assigns, socket) do
-    changeset = Core.change_user(user)
+    changeset = Users.change_user(user)
 
     {:ok,
      socket
@@ -43,7 +43,7 @@ defmodule LicantroWeb.Admin.UserLive.FormComponent do
   def handle_event("validate", %{"user" => user_params}, socket) do
     changeset =
       socket.assigns.user
-      |> Core.change_user(user_params)
+      |> Users.change_user(user_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
@@ -54,7 +54,7 @@ defmodule LicantroWeb.Admin.UserLive.FormComponent do
   end
 
   defp save_user(socket, :edit, user_params) do
-    case Core.update_user(socket.assigns.user, user_params) do
+    case Users.update_user(socket.assigns.user, user_params) do
       {:ok, user} ->
         notify_parent({:saved, user})
 
@@ -69,7 +69,7 @@ defmodule LicantroWeb.Admin.UserLive.FormComponent do
   end
 
   defp save_user(socket, :new, user_params) do
-    case Core.create_user(user_params) do
+    case Users.create_user(user_params) do
       {:ok, user} ->
         notify_parent({:saved, user})
 

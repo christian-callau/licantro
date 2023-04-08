@@ -1,21 +1,20 @@
 <.header>
-  <%= gettext("Users") %>
+  <%= gettext("Listing Users") %>
   <:actions>
-    <.link navigate={~p"/admin"}>
-      <.button><%= gettext("Back") %></.button>
-    </.link>
     <.link patch={~p"/admin/users/new"}>
       <.button><%= gettext("New User") %></.button>
     </.link>
   </:actions>
 </.header>
 
+<.back navigate={~p"/admin"}><%= gettext("Back to Admin") %></.back>
+
 <.table
   id="users"
   rows={@streams.users}
   row_click={fn {_id, user} -> JS.navigate(~p"/admin/users/#{user}") end}
 >
-  <:col :let={{_id, user}} label="Fbid"><%= user.fbid %></:col>
+  <:col :let={{_id, user}} label="Uid"><%= user.uid %></:col>
   <:col :let={{_id, user}} label="Name"><%= user.name %></:col>
   <:col :let={{_id, user}} label="Role"><%= user.role %></:col>
   <:action :let={{_id, user}}>

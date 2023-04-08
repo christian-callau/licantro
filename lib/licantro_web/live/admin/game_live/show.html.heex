@@ -7,11 +7,11 @@
   </:actions>
 </.header>
 
+<.back navigate={~p"/admin/games"}><%= gettext("Back to Games") %></.back>
+
 <.list>
   <:item title="Name"><%= @game.name %></:item>
 </.list>
-
-<.back navigate={~p"/admin/games"}><%= gettext("Back to games") %></.back>
 
 <.modal
   :if={@live_action == :edit}

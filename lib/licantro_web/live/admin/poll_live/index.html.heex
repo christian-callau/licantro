@@ -1,33 +1,32 @@
 <.header>
   <%= @game.name %> : <%= gettext("Polls") %>
   <:actions>
-    <.link navigate={~p"/admin/games"}>
-      <.button><%= gettext("Back") %></.button>
-    </.link>
-    <.link patch={~p"/admin/games/#{@game.id}/polls/new"}>
+    <.link patch={~p"/admin/games/#{@game}/polls/new"}>
       <.button><%= gettext("New Poll") %></.button>
     </.link>
   </:actions>
 </.header>
 
+<.back navigate={~p"/admin/games"}><%= gettext("Back to Games") %></.back>
+
 <.table
   id="polls"
   rows={@streams.polls}
-  row_click={fn {_id, poll} -> JS.navigate(~p"/admin/games/#{@game.id}/polls/#{poll}") end}
+  row_click={fn {_id, poll} -> JS.navigate(~p"/admin/games/#{@game}/polls/#{poll}") end}
 >
   <:col :let={{_id, poll}} label="Name"><%= poll.name %></:col>
   <:col :let={{_id, poll}} label="Opened at"><%= poll.opened_at %></:col>
   <:col :let={{_id, poll}} label="Closed at"><%= poll.closed_at %></:col>
   <:action :let={{_id, poll}}>
-    <.link navigate={~p"/admin/games/#{@game.id}/polls/#{poll}/players"}>
+    <.link navigate={~p"/admin/games/#{@game}/polls/#{poll}/players"}>
       <%= gettext("Players") %>
     </.link>
   </:action>
   <:action :let={{_id, poll}}>
     <div class="sr-only">
-      <.link navigate={~p"/admin/games/#{@game.id}/polls/#{poll}"}><%= gettext("Show") %></.link>
+      <.link navigate={~p"/admin/games/#{@game}/polls/#{poll}"}><%= gettext("Show") %></.link>
     </div>
-    <.link patch={~p"/admin/games/#{@game.id}/polls/#{poll}/edit"}><%= gettext("Edit") %></.link>
+    <.link patch={~p"/admin/games/#{@game}/polls/#{poll}/edit"}><%= gettext("Edit") %></.link>
   </:action>
   <:action :let={{id, poll}}>
     <.link
@@ -43,7 +42,7 @@
   :if={@live_action in [:new, :edit]}
   id="poll-modal"
   show
-  on_cancel={JS.navigate(~p"/admin/games/#{@game.id}/polls")}
+  on_cancel={JS.navigate(~p"/admin/games/#{@game}/polls")}
 >
   <.live_component
     module={LicantroWeb.Admin.PollLive.FormComponent}
@@ -52,6 +51,6 @@
     action={@live_action}
     game={@game}
     poll={@poll}
-    patch={~p"/admin/games/#{@game.id}/polls"}
+    patch={~p"/admin/games/#{@game}/polls"}
   />
 </.modal>

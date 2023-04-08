@@ -1,14 +1,13 @@
 <.header>
-  <%= gettext("Games") %>
+  <%= gettext("Listing Games") %>
   <:actions>
-    <.link navigate={~p"/admin"}>
-      <.button><%= gettext("Back") %></.button>
-    </.link>
     <.link patch={~p"/admin/games/new"}>
       <.button><%= gettext("New Game") %></.button>
     </.link>
   </:actions>
 </.header>
+
+<.back navigate={~p"/admin"}><%= gettext("Back to Admin") %></.back>
 
 <.table
   id="games"
