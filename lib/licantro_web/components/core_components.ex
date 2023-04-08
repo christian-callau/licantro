@@ -663,34 +663,34 @@ defmodule LicantroWeb.CoreComponents do
   Renders a facebook avatar.
 
   """
-  attr :fbid, :string, required: true, doc: "the facebook id of the user"
+  attr :uid, :string, required: true, doc: "the facebook id of the user"
   attr :name, :string, required: true, doc: "the name of the user"
 
-  def fb_avatar_lg(assigns) do
+  def avatar(assigns) do
     ~H"""
-    <%= if @fbid == nil do %>
-      <span class="flex justify-center items-center bg-blue-400 rounded-full w-14 h-14 text-2xl border border-neutral-700">
+    <%= if @uid == nil do %>
+      <span class="flex justify-center items-center bg-blue-400 rounded-full w-[52px] h-[52px] text-2xl border border-neutral-700">
         <%= initials(@name) %>
       </span>
     <% else %>
       <img
-        src={"https://graph.facebook.com/#{@fbid}/picture"}
+        src={"https://graph.facebook.com/#{@uid}/picture"}
         alt={initials(@name)}
-        class="rounded-full w-14 h-14 border border-neutral-700"
+        class="rounded-full border border-neutral-700"
       />
     <% end %>
     """
   end
 
-  def fb_avatar_md(assigns) do
+  def avatar_md(assigns) do
     ~H"""
-    <%= if @fbid == nil do %>
+    <%= if @uid == nil do %>
       <span class="flex justify-center items-center bg-blue-400 rounded-full w-10 h-10 text-xl border border-neutral-700">
         <%= initials(@name) %>
       </span>
     <% else %>
       <img
-        src={"https://graph.facebook.com/#{@fbid}/picture"}
+        src={"https://graph.facebook.com/#{@uid}/picture"}
         alt={initials(@name)}
         class="rounded-full w-10 h-10 border border-neutral-700"
       />
@@ -698,15 +698,15 @@ defmodule LicantroWeb.CoreComponents do
     """
   end
 
-  def fb_avatar_sm(assigns) do
+  def avatar_sm(assigns) do
     ~H"""
-    <%= if @fbid == nil do %>
+    <%= if @uid == nil do %>
       <span class="flex justify-center items-center bg-blue-400 rounded-full w-6 h-6 text-sm border border-neutral-700">
         <%= initials(@name) %>
       </span>
     <% else %>
       <img
-        src={"https://graph.facebook.com/#{@fbid}/picture"}
+        src={"https://graph.facebook.com/#{@uid}/picture"}
         alt={initials(@name)}
         class="rounded-full w-6 h-6 border border-neutral-700"
       />

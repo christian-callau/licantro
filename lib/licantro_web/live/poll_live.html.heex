@@ -1,40 +1,38 @@
 <div class="flex justify-center">
   <div class="w-[25rem] flex flex-col">
-    <header class="flex flex-col items-center p-4 sticky top-0 bg-black border-b border-neutral-800">
-      <.link navigate={~p"/games/#{@game}/polls"} class="absolute left-4">
+    <header class="flex flex-col items-center p-2 sticky top-0 bg-black border-b border-neutral-800">
+      <.link navigate={~p"/games/#{@game}/polls"} class="absolute top-4 left-4">
         <Heroicons.chevron_left class="h-8" />
       </.link>
-      <.link patch={~p"/games/#{@game}/polls/#{@poll}/live/novote"} class="absolute right-4">
-        <%!-- <Heroicons.fire class="h-8" /> --%>
-        <%= gettext("No voting") %>
+      <.link patch={~p"/games/#{@game}/polls/#{@poll}/live/novote"} class="absolute top-4 right-4">
+        <Heroicons.bars_3_bottom_left class="h-8" />
       </.link>
-      <h1 class="text-2xl"><%= @game.name %></h1>
-      <h1 class="text-2xl"><%= @poll.name %></h1>
+      <h1 class="text-xl"><%= @game.name %> <%= @poll.name %></h1>
       <h1 class="text-4xl"><%= format_time(@clock.time) %></h1>
       <h2 class={"text-2xl #{if @clock.down < 600, do: 'text-red-600'}"}>
         <%= format_down(@clock.down) %>
       </h2>
     </header>
-    <main class="flex flex-col items-center">
+    <main class="flex flex-col items-center p-2 space-y-2">
       <div
         :for={%{id: id, uid: uid, name: name, voters: voters} <- @users_votes}
-        class={"grid #{if @is_poll_open and @is_user_poll, do: 'grid-cols-[3.5rem_min(calc(100vw_-_10rem),_15rem)_3rem_3rem]', else: 'grid-cols-[4rem_min(calc(100vw_-_7rem),_18rem)_3rem]'}"}
+        class={if @is_poll_open and @is_user_poll, do: "votes-open", else: "votes-closed"}
       >
         <.link
           patch={~p"/games/#{@game}/polls/#{@poll}/live/#{id}/votes"}
           class="flex justify-center items-center cursor-pointer"
         >
-          <.fb_avatar_lg fbid={uid} name={name} />
+          <.avatar uid={uid} name={name} />
         </.link>
 
-        <div class="flex flex-col p-2">
+        <div class="flex flex-col pl-3">
           <div class="text-xl whitespace-nowrap overflow-hidden text-ellipsis">
             <%= name %>
           </div>
           <div class="flex flex-wrap gap-1">
             <div :if={length(voters) == 0} class="h-6" />
             <%= for %{uid: uid, name: name} <- voters do %>
-              <.fb_avatar_sm fbid={uid} name={name} />
+              <.avatar_sm uid={uid} name={name} />
             <% end %>
           </div>
         </div>
@@ -82,7 +80,7 @@
     </div>
     <div class="flex flex-col space-y-1 max-h-80 overflow-y-scroll">
       <div :for={%{uid: uid, name: name} <- @users_novote} class="flex items-center space-x-2">
-        <.fb_avatar_md fbid={uid} name={name} />
+        <.avatar_md uid={uid} name={name} />
         <span><%= name %></span>
       </div>
     </div>
@@ -113,7 +111,7 @@
         :for={%{uid: uid, name: name} <- @user_votes.voters}
         class="flex items-center space-x-2"
       >
-        <.fb_avatar_md fbid={uid} name={name} />
+        <.avatar_md uid={uid} name={name} />
         <span><%= name %></span>
       </div>
     </div>

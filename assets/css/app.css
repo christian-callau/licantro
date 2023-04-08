@@ -16,3 +16,17 @@
   background-position: center center;
   background-repeat: no-repeat;
 }
+
+@layer components {
+  .votes-open {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 52px 1fr 48px 48px;
+  }
+
+  .votes-closed {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 52px 1fr 48px;
+  }
+}
