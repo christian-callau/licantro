@@ -21,11 +21,25 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 
+let Hooks = {};
+
+Hooks.LocalTime = {
+  mounted() {
+    this.updated();
+  },
+  updated() {
+    let dt = new Date(this.el.textContent + "Z");
+    this.el.textContent = dt.toLocaleTimeString("en-GB");
+    this.el.classList.remove("invisible");
+  },
+};
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
+  hooks: Hooks,
 });
 
 // connect if there are any LiveViews on the page

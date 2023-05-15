@@ -150,14 +150,6 @@ defmodule LicantroWeb.PollLive do
     %{time: time, down: down}
   end
 
-  defp format_time(time) do
-    time
-    |> Time.add(3600)
-    |> Time.to_string()
-    |> String.split(".")
-    |> List.first()
-  end
-
   defp format_down(down) do
     [
       down |> div(3600) |> Integer.to_string() |> String.pad_leading(2, "0"),

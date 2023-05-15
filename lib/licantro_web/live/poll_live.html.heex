@@ -8,7 +8,7 @@
         <Heroicons.bars_3_bottom_left class="h-8" />
       </.link>
       <h1 class="text-xl"><%= @game.name %> <%= @poll.name %></h1>
-      <h1 class="text-4xl"><%= format_time(@clock.time) %></h1>
+      <h1 phx-hook="LocalTime" id="time" class="text-4xl invisible"><%= @clock.time %></h1>
       <h2 class={"text-2xl #{if @clock.down < 600, do: 'text-red-600'}"}>
         <%= format_down(@clock.down) %>
       </h2>
