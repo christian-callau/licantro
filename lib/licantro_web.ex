@@ -84,6 +84,7 @@ defmodule LicantroWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import LicantroWeb.CoreComponents
+      import LicantroWeb.Avatar
       import LicantroWeb.Gettext
 
       # Shortcut for generating JS commands
