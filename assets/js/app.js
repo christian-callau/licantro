@@ -28,7 +28,7 @@ Hooks.LocalTime = {
     this.updated();
   },
   updated() {
-    let dt = new Date(this.el.textContent + "Z");
+    let dt = new Date(this.el.textContent);
     this.el.textContent = dt.toLocaleTimeString("en-GB");
     this.el.classList.remove("invisible");
   },

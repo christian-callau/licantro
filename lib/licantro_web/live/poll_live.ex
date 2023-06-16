@@ -144,7 +144,7 @@ defmodule LicantroWeb.PollLive do
   end
 
   defp compute_clock(%{closed_at: closed_at}, true) do
-    time = Time.utc_now()
+    time = DateTime.utc_now()
     down = NaiveDateTime.diff(closed_at, NaiveDateTime.utc_now())
 
     %{time: time, down: down}
