@@ -16,3 +16,13 @@ config :logger, level: :info
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
+
+config :sentry,
+  dsn: "https://1f4e3c4437e0bc7e0c1cc2ffa2996e07@o4506509230866432.ingest.sentry.io/4506509231063040",
+  environment_name: :prod,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  tags: %{
+    env: "production"
+  },
+  included_environments: [:prod]
